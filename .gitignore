@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# To ignore /bin and /obj
+EmployeeManagement/bin
+EmployeeManagement/obj
