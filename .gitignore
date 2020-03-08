@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 
 # To ignore /bin and /obj
-/EmployeeManagement/bin
-/EmployeeManagement/obj
+EmployeeManagement/bin
+EmployeeManagement/obj
