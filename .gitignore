@@ -351,4 +351,4 @@ MigrationBackup/
 
 # To ignore /bin and /obj
 EmployeeManagement/bin
-EmployeeManagement/obj
+obj
