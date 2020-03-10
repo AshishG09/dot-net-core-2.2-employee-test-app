@@ -25,7 +25,7 @@ namespace EmployeeManagement
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddXmlSerializerFormatters(); // To be able to return data in xml format
             services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>(); //This is dependency injection for IEmployee interface 
         }
 
