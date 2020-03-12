@@ -25,5 +25,17 @@ namespace EmployeeManagement.Controllers
             Employee employee = _employeeRepository.GetEmployee(1);
             return View(employee);
         }
+
+        public ViewResult DetailsAbsolutePath()
+        {
+            Employee employee = _employeeRepository.GetEmployee(1);
+            return View("/MyViews/Test.cshtml");
+        }
+
+        public ViewResult DetailsRelativePath()
+        {
+            Employee employee = _employeeRepository.GetEmployee(1);
+            return View("../../MyViews/Test");
+        }
     }
 }
