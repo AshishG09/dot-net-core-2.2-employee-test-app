@@ -1,25 +1,23 @@
 ﻿<!--Below line includes Employee model and strongly types this view to the Details view-->
 @model EmployeeManagement.ViewModels.HomeDetailsViewModel
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <h3>@Model.PageTitle</h3>
-    <!--
-        Note we are still using ViewBag as pageTitle is not a property of the Employee model
-        To get rid of ViewBag we will create ViewModel which will have all the required properties for Employee model and Details page
-    -->
+@{ 
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Employee Details";
+}
 
-    <div>
-        Name : @Model.Employee.Name 
-    </div>
-    <div>
-        Email : @Model.Employee.Email
-    </div>
-    <div>
-        Department : @Model.Employee.Department
-    </div>
-</body>
-</html>
+<h3>@Model.PageTitle</h3>
+<!--
+    Note we are still using ViewBag as pageTitle is not a property of the Employee model
+    To get rid of ViewBag we will create ViewModel which will have all the required properties for Employee model and Details page
+-->
+
+<div>
+    Name : @Model.Employee.Name
+</div>
+<div>
+    Email : @Model.Employee.Email
+</div>
+<div>
+    Department : @Model.Employee.Department
+</div>
