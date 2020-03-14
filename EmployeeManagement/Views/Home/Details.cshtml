@@ -1,11 +1,8 @@
 ﻿<!--Below line includes Employee model and strongly types this view to the Details view-->
 @model EmployeeManagement.ViewModels.HomeDetailsViewModel
-
 @{ 
-    Layout = "/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Employee Details";
 }
-
 <h3>@Model.PageTitle</h3>
 <!--
     Note we are still using ViewBag as pageTitle is not a property of the Employee model
