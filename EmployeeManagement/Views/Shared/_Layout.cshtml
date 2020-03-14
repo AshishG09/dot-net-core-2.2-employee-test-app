@@ -9,5 +9,9 @@
     <div>
         @RenderBody()
     </div>
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", true) //set to false if this is optional
+    }
 </body>
 </html>
