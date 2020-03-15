@@ -44,10 +44,12 @@ namespace EmployeeManagement
             app.UseStaticFiles();
 
             //app.UseMvcWithDefaultRoute(); Commented to demonstrate routing in ASP.NET MVC
-            app.UseMvc(routes => {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
-            
+            //app.UseMvc(routes => {
+            //    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            //});
+
+            app.UseMvc();//Not specifying routes here as we will be using Attribute routing
+
             //app.Run(async (context) =>
             //{            
             //    await context.Response.WriteAsync("Hello World!");           
