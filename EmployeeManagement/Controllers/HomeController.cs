@@ -22,10 +22,10 @@ namespace EmployeeManagement.Controllers
             var model = _employeeRepository.GetEmployees();
             return View(model);
         }
-        public ViewResult Details(int id)
+        public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel();
-            homeDetailsViewModel.Employee = _employeeRepository.GetEmployee(1);
+            homeDetailsViewModel.Employee = _employeeRepository.GetEmployee(id??1);
             homeDetailsViewModel.PageTitle = "Employee details";
             return View(homeDetailsViewModel);
         }
