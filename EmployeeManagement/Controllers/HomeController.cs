@@ -25,7 +25,7 @@ namespace EmployeeManagement.Controllers
         public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel();
-            homeDetailsViewModel.Employee = _employeeRepository.GetEmployee(id??1);
+            homeDetailsViewModel.Employee = _employeeRepository.GetEmployee(id ?? 1);
             homeDetailsViewModel.PageTitle = "Employee details";
             return View(homeDetailsViewModel);
         }
@@ -37,10 +37,15 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Create(Employee employee)
+        public IActionResult Create(Employee employee)
         {
-            employee = _employeeRepository.Add(employee);
-            return RedirectToAction("details", new { id = employee.Id});
+            if (ModelState.IsValid)
+            {
+                employee = _employeeRepository.Add(employee);
+                return RedirectToAction("details", new { id = employee.Id });
+            }
+
+            return View();
         }
 
     }
