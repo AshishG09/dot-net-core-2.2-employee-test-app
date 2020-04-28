@@ -29,7 +29,7 @@ namespace EmployeeManagement
             //Here you can also use AddDBContext class instead of 
             services.AddDbContextPool<AppDBContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             services.AddMvc().AddXmlSerializerFormatters(); // To be able to return data in xml format
-            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>(); //This is dependency injection for IEmployee interface 
+            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //This is dependency injection for IEmployee interface 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

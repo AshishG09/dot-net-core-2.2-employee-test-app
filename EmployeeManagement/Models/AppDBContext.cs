@@ -12,5 +12,7 @@ namespace EmployeeManagement.Models
         {
 
         }
+
+        public DbSet<Employee> Employees { get; set; }
     }
 }

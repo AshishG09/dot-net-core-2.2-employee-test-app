@@ -25,6 +25,17 @@ namespace EmployeeManagement.Models
             return employee;
         }
 
+        public Employee Delete(int Id)
+        {
+            var employee = _employeeList.Find(e => e.Id == Id);
+            if(employee != null)
+            {
+                _employeeList.Remove(employee);
+            }
+
+            return employee;
+        }
+
         public Employee GetEmployee(int Id)
         {
             return _employeeList.FirstOrDefault(e => e.Id == Id);
@@ -33,6 +44,19 @@ namespace EmployeeManagement.Models
         public IEnumerable<Employee> GetEmployees()
         {
             return _employeeList;
+        }
+
+        public Employee Update(Employee employee)
+        {
+            var newEmployee = _employeeList.Find(e => e.Id == employee.Id);
+            if (newEmployee != null)
+            {
+                newEmployee.Department = employee.Department;
+                newEmployee.Email = employee.Email;
+                newEmployee.Name = employee.Name;
+            }
+
+            return newEmployee;
         }
     }
 }
