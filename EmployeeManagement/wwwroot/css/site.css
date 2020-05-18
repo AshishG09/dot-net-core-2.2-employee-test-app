@@ -1,3 +1,14 @@
 ﻿.btn{
     width:75px;
 }
+
+.image-thumbnail{
+    height: 200px;
+    width: auto;
+}
+
+.card-deck{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 15px 15px;
+}
