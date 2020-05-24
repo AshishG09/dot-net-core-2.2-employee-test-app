@@ -19,6 +19,6 @@ namespace EmployeeManagement.ViewModels
         [Required]
         public DeptEnum? Department { get; set; }
 
-        public List<IFormFile> Photos { get; set; }
+        public IFormFile Photo { get; set; }
     }
 }
