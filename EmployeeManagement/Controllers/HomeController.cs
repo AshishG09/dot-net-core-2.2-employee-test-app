@@ -32,7 +32,13 @@ namespace EmployeeManagement.Controllers
         public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel();
-            homeDetailsViewModel.Employee = _employeeRepository.GetEmployee(id ?? 1);
+            Employee employee = _employeeRepository.GetEmployee(id.Value);
+            if (employee == null)
+            {
+                Response.StatusCode = 404;
+                return View("EmployeeNotFound", id.Value);
+            }
+            homeDetailsViewModel.Employee = employee;
             homeDetailsViewModel.PageTitle = "Employee details";
             return View(homeDetailsViewModel);
         }
