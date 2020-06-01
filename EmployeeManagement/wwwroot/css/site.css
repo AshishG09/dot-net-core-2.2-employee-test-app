@@ -9,6 +9,19 @@
 
 .card-deck{
     display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 15px 15px;
+    grid-template-columns: auto;
+    grid-gap: 10px 10px;
+}
+
+@media (min-width: 768px){
+    .card-deck {
+        grid-template-columns: auto auto;
+        grid-gap: 15px 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .card-deck {
+        grid-template-columns: auto auto auto;
+    }
 }
