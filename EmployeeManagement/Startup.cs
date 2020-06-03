@@ -41,7 +41,23 @@ namespace EmployeeManagement
             }
             else
             {
-                app.UseStatusCodePagesWithRedirects("/Error/{0}");
+                /*
+                 Below redirect pipline redirects the not found paths to Error/404 page,
+                 this redirect is a 302 redirect (resource temporarily moved) which reflects in the browser.
+                 The requested Error/404 page also reflects in the browser as a 200 OK. Thus the actual 404 error
+                 that occured on the server does not reflect in the browser. Therefore, this method of showing 
+                 error page is not semantically correct and should be avoided.
+                 */
+                //app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
+                /*
+                 Below pipeline method re-executes the Http request and does not do a 302 redirect. Thus the URL in the 
+                 browser does not change even when the error page is displayed. Also the 200 OK message sent by the MVC 
+                 peice of pipline is replaced by the 404 status by the re-execute method to restore the original status
+                 code. Thus, the browser correctly displays the status message. Below method also allows us to access the
+                 original url path, querystring etc as seen in the Error 404 page.
+                 */
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
 
             //FileServerOptions fileServerOptions = new FileServerOptions();
