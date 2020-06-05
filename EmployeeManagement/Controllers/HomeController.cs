@@ -31,6 +31,11 @@ namespace EmployeeManagement.Controllers
         }
         public ViewResult Details(int? id)
         {
+            /*
+             * Below exception was only for demonstration of Part 60 --handling exceptions globally
+             */
+            //throw new Exception();
+
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel();
             Employee employee = _employeeRepository.GetEmployee(id.Value);
             if (employee == null)

@@ -42,6 +42,11 @@ namespace EmployeeManagement
             else
             {
                 /*
+                 Below middleware handles unhandled exceptions like a Global exception handler
+                 */
+                app.UseExceptionHandler("/Error");
+
+                /*
                  Below redirect pipline redirects the not found paths to Error/404 page,
                  this redirect is a 302 redirect (resource temporarily moved) which reflects in the browser.
                  The requested Error/404 page also reflects in the browser as a 200 OK. Thus the actual 404 error

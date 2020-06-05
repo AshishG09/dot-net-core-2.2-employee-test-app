@@ -25,5 +25,17 @@ namespace EmployeeManagement.Controllers
             }
             return View("NotFound");
         }
+
+        [Route("Error")]
+        public IActionResult Error()
+        {
+            var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            ViewBag.ErrorPath = exceptionDetails.Path;
+            ViewBag.ErrorDesc = exceptionDetails.Error.InnerException;
+            ViewBag.StackTrace = exceptionDetails.Error.StackTrace;
+
+            return View("Error");
+        }
     }
 }
