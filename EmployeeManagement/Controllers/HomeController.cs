@@ -34,7 +34,7 @@ namespace EmployeeManagement.Controllers
             /*
              * Below exception was only for demonstration of Part 60 --handling exceptions globally
              */
-            throw new Exception();
+            //throw new Exception();
 
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel();
             Employee employee = _employeeRepository.GetEmployee(id.Value);

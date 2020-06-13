@@ -6,6 +6,7 @@ using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,10 @@ namespace EmployeeManagement
             services.AddDbContextPool<AppDBContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             services.AddMvc().AddXmlSerializerFormatters(); // To be able to return data in xml format
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //This is dependency injection for IEmployee interface 
+
+            //Adding services for ASP.NET Core Identity
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +75,9 @@ namespace EmployeeManagement
             //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
 
             app.UseStaticFiles();
+
+            /*Add authentication after adding Identity*/
+            app.UseAuthentication();
 
             //app.UseMvcWithDefaultRoute(); Commented to demonstrate routing in ASP.NET MVC
             app.UseMvc(routes =>
