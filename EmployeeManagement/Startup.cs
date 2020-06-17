@@ -33,8 +33,19 @@ namespace EmployeeManagement
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //This is dependency injection for IEmployee interface 
 
             //Adding services for ASP.NET Core Identity
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDBContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<AppDBContext>();
+
+            /*Configure default password complexity
+               We can use below method to customize default passord complexity
+               However, we are doing this above in the AddIdentity menthod itself
+             */
+            //services.Configure<IdentityOptions>(options => {
+            //    options.Password.RequiredLength = 5;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +97,7 @@ namespace EmployeeManagement
             });
 
             //app.Run(async (context) =>
+
             //{            
             //    await context.Response.WriteAsync("Hello World!");           
             //});
