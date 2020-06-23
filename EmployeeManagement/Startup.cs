@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +32,24 @@ namespace EmployeeManagement
         {
             //Here you can also use AddDBContext class instead of 
             services.AddDbContextPool<AppDBContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
-            services.AddMvc().AddXmlSerializerFormatters(); // To be able to return data in xml format
+
+            /*
+             * Adding authorization globally instead of adding [Authorize] for every controller
+             * We may exclude actions that do not require authorization by adding [AllowAnonymous] attribute on that
+             * action
+             */
+            services.AddMvc(config => {
+                //create authorization policy
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+
+                //Add above policy to the filter
+                config.Filters.Add(new AuthorizeFilter(policy));
+                
+            }).AddXmlSerializerFormatters(); // To be able to return data in xml format
+
+
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>(); //This is dependency injection for IEmployee interface 
 
             //Adding services for ASP.NET Core Identity
@@ -46,6 +66,7 @@ namespace EmployeeManagement
             //    options.Password.RequiredLength = 5;
             //    options.Password.RequireNonAlphanumeric = false;
             //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

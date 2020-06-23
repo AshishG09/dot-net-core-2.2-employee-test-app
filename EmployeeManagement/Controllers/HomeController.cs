@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,11 +25,14 @@ namespace EmployeeManagement.Controllers
             HostingEnvironment = hostingEnvironment;
         }
 
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var model = _employeeRepository.GetEmployees();
             return View(model);
         }
+
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             /*
