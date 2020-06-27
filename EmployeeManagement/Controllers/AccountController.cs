@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -75,7 +76,7 @@ namespace EmployeeManagement.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +84,15 @@ namespace EmployeeManagement.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        //return LocalRedirect(returnUrl); 
+                        /*We can use above 'LocalRedirect' method but it throws error if returnUrl is NOT local
+                         Hence, we use Url.IsLocalUrl method in the IF statement to verify if it is Local or not, if the returnUrl
+                         is not Local url then we redirect the User to the Index page without throwing error!
+                         */
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToAction("index", "home");
                 }
 
