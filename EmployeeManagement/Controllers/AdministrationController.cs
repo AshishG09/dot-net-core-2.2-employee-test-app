@@ -18,7 +18,7 @@ namespace EmployeeManagement.Controllers
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;        
 
         public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
@@ -297,6 +297,75 @@ namespace EmployeeManagement.Controllers
             }
 
             return RedirectToAction("ListUsers");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageUserRoles(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if(user == null)
+            {
+                return View("NotFound");
+            }
+
+            var model = new List<ManageUserRoleViewModel>();
+
+            foreach(var role in roleManager.Roles)
+            {
+                if(await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    model.Add(new ManageUserRoleViewModel { RoleName = role.Name, RoleId = role.Id, IsSelected = true });
+                }
+                else
+                {
+                    model.Add(new ManageUserRoleViewModel { RoleName = role.Name, RoleId = role.Id, IsSelected = false });
+                }
+            }
+
+            ViewBag.UserId = userId;
+            ViewBag.UserName = user.UserName;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageUserRoles(List<ManageUserRoleViewModel> userRoles, string userId)
+        {
+            if(userRoles == null)
+            {
+                return View("Error");
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if(user == null)
+            {
+                ViewBag.ErrorMsg = "User not found";
+                return View("NotFound");
+            }
+
+            var existingRoles = await userManager.GetRolesAsync(user);
+            var resultsRemove = await userManager.RemoveFromRolesAsync(user, existingRoles);
+            
+            if (!resultsRemove.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove existing roles");
+                return View(userRoles);
+            }
+
+            var resultsAdd = await userManager.AddToRolesAsync(user, userRoles.Where(x => x.IsSelected).Select(x => x.RoleName));
+
+            if (resultsAdd.Succeeded)
+            {
+                return RedirectToAction("EditUser", new {id = userId });
+            }
+            
+            foreach(var error in resultsAdd.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View("Error");
         }
 
     }
